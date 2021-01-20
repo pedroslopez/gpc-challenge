@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% load l10n %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ objective.metric_name }}
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-row items-center ">
+    <div class="flex-grow">
+        <h1 class="text-3xl font-bold text-gray-900 ">
+            {{ objective.metric_name }}
+        </h1>
+        <p class="py-2 text-gray-700">
+            {{ objective.description }}
+        </p>
+    </div>
+    <a href="#" class="rounded bg-gray-400 hover:bg-indigo-500 text-white py-2 px-3 flex items-center ml-4">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+            </path>
+        </svg>
+    </a>
+    <a href="#" class="rounded bg-gray-400 hover:bg-red-500 text-white py-2 px-3 flex items-center ml-4">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+            </path>
+        </svg>
+    </a>
+</div>
+
+<div class="flex flex-col sm:flex-row mt-5 justify-between items-center">
+    <div class="flex-1">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900">
+                Calculadora
+            </h2>
+            <p class="text-sm py-2 text-gray-600">
+                Digite el resultado real de la meta para y presione el botón para obetener
+                el porcentaje de consecución correspondiente.</p>
+
+            <form class="py-2" method="POST">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="py-3 text-right">
+                    <button type="submit"
+                        class="inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="pr-1">
+                            Calcular
+                        </span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 2" class="m-6 sm:ml-10">
+        {% if result %}
+        <div class=" text-right pb-5">
+            <span class="text-gray-400 pr-1">consecución</span>
+            <span class="text-6xl font-medium text-indigo-500">{{ result.percentage | floatformat }}%</span>
+        </div>
+        {% endif %}
+
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    var points = [
+        {% for goal in objective.goal_set.all %}
+            { x: {{ goal.value | unlocalize }}, y: {{ goal.percentage | unlocalize }} }, 
+        {% endfor %}
+    ];
+
+    var config = {
+        type: 'line',
+        data: {
+            datasets: [
+            {
+                data: [
+                    {% if result %}
+                    {x: {{ result.value | unlocalize }}, y: {{ result.percentage | unlocalize }}}
+                    {% endif %}
+                ],
+                pointRadius: 10,
+                pointHoverRadius: 12,
+                backgroundColor: 'red',
+            },{
+                data: points,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(75, 192, 192)',
+                lineTension: 0.1,
+                pointRadius: 3,
+                pointHoverRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false,
+            },
+            layout: {
+                padding: 12,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    display: true,
+                }],
+            },
+        }
+    };
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    window.myLine = new Chart(ctx, config);
+
+</script>
+{% endblock %}

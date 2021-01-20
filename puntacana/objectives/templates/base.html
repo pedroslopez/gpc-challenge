@@ -6,6 +6,7 @@
     <title>{% block title %}{% endblock %} - Grupo Puntacana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50">
@@ -17,6 +18,9 @@
     </div>
 
     {% include 'footer.html' %}
+
+    {% block scripts %}
+    {% endblock %}
 </body>
 
 </html>

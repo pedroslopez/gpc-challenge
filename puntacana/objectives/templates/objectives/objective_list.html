@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Objetivos
+{% endblock %}
+
 {% block content %}
 <div class="flex flex-row items-center ">
     <div class="flex-grow">
@@ -21,7 +25,7 @@
 
 <div class="py-2">
     {% for objective in object_list %}
-    <a href="#"
+    <a href="{{ objective.get_absolute_url }}"
         class="bg-white group rounded shadow my-4 p-5 flex items-center flex-row hover:bg-indigo-500 text-gray-900 hover:text-white">
         <div class="flex-grow">
             <div class="text-lg font-medium ">{{ objective.metric_name }}</div>
