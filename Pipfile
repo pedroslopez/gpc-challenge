@@ -11,6 +11,7 @@ django-crispy-forms = "*"
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.8"
