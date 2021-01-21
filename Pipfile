@@ -12,6 +12,7 @@ django-crispy-forms = "*"
 pylint = "*"
 autopep8 = "*"
 selenium = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.8"
