@@ -3,11 +3,11 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-{% if form.instance.id %}
-Editar {{ form.instance.metric_name|lower }}
-{% else %}
-Crear objetivo
-{% endif %}
+    {% if form.instance.id %}
+    Editar {{ form.instance.metric_name|lower }}
+    {% else %}
+    Crear objetivo
+    {% endif %}
 {% endblock %}
 
 {% block content %}

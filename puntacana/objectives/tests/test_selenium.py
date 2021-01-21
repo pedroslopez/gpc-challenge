@@ -19,13 +19,7 @@ class SeleniumTests(LiveServerTestCase):
 
     def test_goal_value_send_non_digit_keys(self):
         """Sending letters to the value input should have no effect"""
-        objective = Objective.objects.create(
-            metric_name='Porcentaje X',
-            description='Este objetivo es muy importante'
-        )
-
-        self.selenium.get(self.live_server_url +
-                          reverse('objective-update', args=[str(objective.id)]))
+        self.selenium.get(self.live_server_url + reverse('objective-add'))
 
         # Get Value input field
         value_input = self.selenium.find_element_by_name("goal_set-0-value")
@@ -40,13 +34,7 @@ class SeleniumTests(LiveServerTestCase):
 
     def test_goal_value_send_digit_keys(self):
         """Sending numbers to the value input should reflect changes"""
-        objective = Objective.objects.create(
-            metric_name='Porcentaje X',
-            description='Este objetivo es muy importante'
-        )
-
-        self.selenium.get(self.live_server_url +
-                          reverse('objective-update', args=[str(objective.id)]))
+        self.selenium.get(self.live_server_url + reverse('objective-add'))
 
         # Get Value input field
         value_input = self.selenium.find_element_by_name("goal_set-0-value")
@@ -58,19 +46,14 @@ class SeleniumTests(LiveServerTestCase):
         # Field should reflect changes
         new_value = value_input.get_attribute("value")
         self.assertEqual(new_value, "123" + previous_value)
-    
+
     def test_goal_percentage_send_non_digit_keys(self):
         """Sending letters to the percentage input should have no effect"""
-        objective = Objective.objects.create(
-            metric_name='Porcentaje X',
-            description='Este objetivo es muy importante'
-        )
-
-        self.selenium.get(self.live_server_url +
-                          reverse('objective-update', args=[str(objective.id)]))
+        self.selenium.get(self.live_server_url + reverse('objective-add'))
 
         # Get percentage input field
-        percentage_input = self.selenium.find_element_by_name("goal_set-0-percentage")
+        percentage_input = self.selenium.find_element_by_name(
+            "goal_set-0-percentage")
         previous_percentage = percentage_input.get_attribute("value")
 
         # Send letter keys
@@ -82,16 +65,11 @@ class SeleniumTests(LiveServerTestCase):
 
     def test_goal_percentage_send_digit_keys(self):
         """Sending numbers to the percentage input should reflect changes"""
-        objective = Objective.objects.create(
-            metric_name='Porcentaje X',
-            description='Este objetivo es muy importante'
-        )
-
-        self.selenium.get(self.live_server_url +
-                          reverse('objective-update', args=[str(objective.id)]))
+        self.selenium.get(self.live_server_url + reverse('objective-add'))
 
         # Get percentage input field
-        percentage_input = self.selenium.find_element_by_name("goal_set-0-percentage")
+        percentage_input = self.selenium.find_element_by_name(
+            "goal_set-0-percentage")
         previous_percentage = percentage_input.get_attribute("value")
 
         # Send number keys
