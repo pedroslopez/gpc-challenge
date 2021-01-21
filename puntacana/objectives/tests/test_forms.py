@@ -132,3 +132,17 @@ class GoalFormSetTestCase(TestCase):
         formset = GoalFormSet(data, instance=self.objective)
 
         self.assertTrue(formset.is_valid())
+    
+    def test_form_count_under_limit(self):
+        """There should be at least two forms"""
+        data = {
+            'goal_set-TOTAL_FORMS': '1',
+            'goal_set-INITIAL_FORMS': '0',
+            'goal_set-0-description': 'Minimo',
+            'goal_set-0-value': '5',
+            'goal_set-0-percentage': '80',
+        }
+
+        formset = GoalFormSet(data, instance=self.objective)
+
+        self.assertFalse(formset.is_valid())
