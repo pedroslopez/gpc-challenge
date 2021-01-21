@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.views import View
+from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+from django.views import View
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .models import Objective, Goal
 from .forms import CalculatorForm, GoalFormSet, GoalFormSetHelper
@@ -75,6 +76,7 @@ class ObjectiveUpdateView(UpdateView):
 
 class ObjectiveDeleteView(DeleteView):
     model = Objective
+    success_url = reverse_lazy('objective-list')
 
 
 class ObjectiveCalculatorView(View):
