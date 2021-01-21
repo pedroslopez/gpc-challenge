@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 crispy-tailwind = "*"
 django-crispy-forms = "*"
+gunicorn = "*"
+dj-database-url = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pylint = "*"
