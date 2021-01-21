@@ -19,8 +19,8 @@ class BaseGoalFormSet(forms.BaseInlineFormSet):
         if any(self.errors):
             return
 
-        validation_error = forms.ValidationError(
-            'Los valores deben ser estrictamente ascendientes o estrictamente descendientes.'
+        sorted_validation_error = forms.ValidationError(
+            'Los valores de meta deben ser estrictamente ascendientes o estrictamente descendientes.'
         )
 
         filled_forms = filter(
@@ -44,12 +44,14 @@ class BaseGoalFormSet(forms.BaseInlineFormSet):
                 if goal_ascending is None:
                     goal_ascending = True
                 elif not goal_ascending:
-                    raise validation_error
+                    raise sorted_validation_error
             elif current_value < previous_value:
                 if goal_ascending is None:
                     goal_ascending = False
                 elif goal_ascending:
-                    raise validation_error
+                    raise sorted_validation_error
+            else:
+                raise forms.ValidationError('Los valores de meta deben ser únicos.')
 
 
 GoalFormSet = forms.inlineformset_factory(

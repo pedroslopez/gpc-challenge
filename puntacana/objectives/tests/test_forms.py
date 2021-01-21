@@ -146,3 +146,20 @@ class GoalFormSetTestCase(TestCase):
         formset = GoalFormSet(data, instance=self.objective)
 
         self.assertFalse(formset.is_valid())
+    
+    def test_unique_goal_value(self):
+        """Goal values should be unique"""
+        data = {
+            'goal_set-TOTAL_FORMS': '2',
+            'goal_set-INITIAL_FORMS': '0',
+            'goal_set-0-description': 'Minimo',
+            'goal_set-0-value': '5',
+            'goal_set-0-percentage': '80',
+            'goal_set-1-description': 'Medio',
+            'goal_set-1-value': '5',
+            'goal_set-1-percentage': '100',
+        }
+
+        formset = GoalFormSet(data, instance=self.objective)
+
+        self.assertFalse(formset.is_valid())
