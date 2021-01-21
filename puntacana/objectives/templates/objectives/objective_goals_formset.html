@@ -32,8 +32,7 @@
             {% endif %}
         </thead>
 
-        <tbody>
-
+        <tbody id="goal_forms">
             {% for form in formset %}
                 {% if form_show_errors and not form.is_extra %}
                     {% include "tailwind/errors.html" %}
@@ -45,11 +44,41 @@
                     {% endfor %}
                 </tr>
             {% endfor %}
+            <tr id="empty_form" style="display:none">
+                {% for field in formset.empty_form %}
+                    {% include 'tailwind/field.html' with tag="td" form_show_labels=False field_class="border px-4 py-2" %}
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
+
+    <input 
+        id="add_more" 
+        class="rounded bg-gray-100 text-sm hover:bg-gray-200 px-3 py-2 mt-2 cursor-pointer" 
+        type="button" 
+        value="Agregar otro +"
+    />
 
     <div class="mt-3">
     {% include "tailwind/inputs.html" %}
     </div>
 {% if formset_tag %}</form>{% endif %}
+
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+  crossorigin="anonymous"></script>
+<script>
+    
+$('#add_more').click(function() {
+    var form_idx = $('#id_goal_set-TOTAL_FORMS').val();
+    
+    var newForm = $('#empty_form').html().replace(/__prefix__/g, form_idx);
+    var newRow = $('<tr></tr>').html(newForm);
+
+    $('#goal_forms').append(newRow);
+	$('#id_goal_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+});
+</script>
+
 {% endspecialspaceless %}
