@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if form.instance.id %}
+Editar {{ form.instance.metric_name|lower }}
+{% else %}
+Crear objetivo
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-row items-center ">
+    <div class="flex-grow">
+        <h1 class="text-3xl font-bold text-gray-900 ">
+            {% if form.instance.id %}
+            Editar objetivo
+            {% else %}
+            Crear objetivo
+            {% endif %}
+        </h1>
+    </div>
+</div>
+
+<div class="my-6 p-5 bg-white rounded shadow">
+    <form method="POST" class="test">
+        {{ form | crispy }}
+        {% crispy goals_formset goals_formset_helper %}
+        <div class="py-3 text-right">
+            <button type="submit"
+                class="inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Guardar
+            </button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

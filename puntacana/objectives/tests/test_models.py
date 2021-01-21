@@ -4,14 +4,24 @@ from objectives.models import Objective, Goal
 
 
 class ObjectiveModelTest(TestCase):
-    def test_objective_string_representation(self):
-        objective_string = 'Porcentaje de ventas'
-        objective = Objective.objects.create(
-            metric_name=objective_string,
+    @classmethod
+    def setUpTestData(cls):
+        cls.objective = Objective.objects.create(
+            metric_name='Porcentaje de ventas',
             description='El procentaje debe ser mayor a 7'
         )
 
-        self.assertEqual(str(objective), objective_string)
+    def test_objective_string_representation(self):
+        """Objective as string should be its metric_name"""
+        string_objective = str(self.objective)
+        
+        self.assertEqual(string_objective, self.objective.metric_name)
+    
+    def test_absolute_url(self):
+        """Objective absolute url should be /objetivos/:id"""
+        absolute_url = self.objective.get_absolute_url()
+
+        self.assertEqual(absolute_url, "/objetivos/%s" % self.objective.id)
 
 
 class GoalModelTest(TestCase):

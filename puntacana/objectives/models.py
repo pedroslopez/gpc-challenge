@@ -21,7 +21,7 @@ class Objective(models.Model):
         left_goal = None
         right_goal = None
 
-        goals = self.goal_set.order_by('id').all()
+        goals = self.goal_set.all()
 
         is_inverse = goals[0].value > goals[1].value
         if is_inverse:
@@ -36,7 +36,7 @@ class Objective(models.Model):
             else:
                 return goal
 
-        #TODO Refactor this
+        # TODO Refactor this
         return (right_goal, left_goal) if is_inverse else (left_goal, right_goal)
 
     def calculate_percentage(self, value):
@@ -67,8 +67,11 @@ class Goal(models.Model):
 
     class Meta:
         verbose_name = 'meta'
+        ordering = ['percentage']
         constraints = [
-            models.UniqueConstraint(fields=['objective', 'value'], name='unique_objective_value')
+            models.UniqueConstraint(
+                fields=['objective', 'value'], name='unique_objective_value'
+            )
         ]
 
     def __str__(self):
