@@ -20,7 +20,7 @@ class BaseGoalFormSet(forms.BaseInlineFormSet):
             return
 
         sorted_validation_error = forms.ValidationError(
-            'Los valores de meta deben ser estrictamente ascendientes o estrictamente descendientes.'
+            'Los valores de meta deben ser estrictamente ascendientes o estrictamente descendentes.'
         )
 
         filled_forms = filter(
