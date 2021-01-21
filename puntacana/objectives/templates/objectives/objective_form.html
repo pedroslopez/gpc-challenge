@@ -24,9 +24,11 @@ Crear objetivo
 </div>
 
 <div class="my-6 p-5 bg-white rounded shadow">
-    <form method="POST" class="test">
+    <form method="POST">
         {{ form | crispy }}
-        {% crispy goals_formset goals_formset_helper %}
+        <div class="py-2">
+            {% crispy goals_formset goals_formset_helper %}
+        </div>
         <div class="py-3 text-right">
             <button type="submit"
                 class="inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

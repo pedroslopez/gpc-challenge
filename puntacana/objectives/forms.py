@@ -9,7 +9,7 @@ class CalculatorForm(forms.Form):
 
 
 class GoalFormSetHelper(FormHelper):
-    template = 'tailwind/table_inline_formset.html'
+    template = 'objectives/objective_goals_formset.html'
     form_tag = False
 
 
