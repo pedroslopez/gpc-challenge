@@ -36,7 +36,6 @@ class Objective(models.Model):
             else:
                 return goal
 
-        # TODO Refactor this
         return (right_goal, left_goal) if is_inverse else (left_goal, right_goal)
 
     def calculate_percentage(self, value):
